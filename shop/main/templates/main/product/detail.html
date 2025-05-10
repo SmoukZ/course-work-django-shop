@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ product.name }}
+{% endblock title %}
+
+{% block content %}
+    <div class="detail-product d-flex">
+        <div class="detail-img">
+            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/nike-shoes.jpeg" %}{% endif %}" alt="" class="detail-image">
+            
+        </div>
+        <div class="detail-description">
+            <h2>{{ product.name }}</h2>
+            <h3>Category: {{ product.category }}</h3>
+            <p>Description: {{ product.description|linebreaks }}</p>
+
+            {% if product.sizes %}
+                <p>Available Sizes: {{ product.get_sizes_display }}</p>
+            {% else %}
+                <p>Available Sizes: Not specified</p>
+            {% endif %}
+            <a href="#" class="cart-btn d-flex align-items-center justify-content-center">Add to</a>
+        </div>
+    </div>
+{% endblock content %}

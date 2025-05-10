@@ -10,6 +10,11 @@ class Category(models.Model):
         indexes = [models.Index(fields=['name'])]
         verbose_name = 'Категория' # Определение в единственном числе
         verbose_name_plural = 'Категории'
+    
+    def get_absolute_url(self):
+        return reverse("main:catalog_by_category", 
+                       args=[self.slug])
+    
 
     def __str__(self):
         return self.name
@@ -28,6 +33,26 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True) # Дата добавления товара
     updated = models.DateTimeField(auto_now=True)
+
+    SIZE_CHOICES = [
+        ('S', 'Small'),
+        ('M', 'Medium'),
+        ('L', 'Large'),
+        ('XL', 'Extra Large'),
+    ]
+    SIZES = [value for value, _ in SIZE_CHOICES]
+    sizes = models.CharField(max_length=50, blank=True, default='')  # Размеры в виде строки: 'S,M,L'
+    
+    def get_sizes_list(self):
+        """Возвращает список размеров."""
+        if self.sizes:
+            return [size.strip() for size in self.sizes.split(',')]
+        return []
+    
+    def get_sizes_display(self):
+        """Возвращает человекочитаемый список размеров."""
+        sizes = self.get_sizes_list()
+        return ', '.join(dict(self.SIZE_CHOICES).get(size, size) for size in sizes)
     
     class Meta:
         ordering = ['name']
