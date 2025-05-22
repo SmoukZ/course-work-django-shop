@@ -1,6 +1,13 @@
 from django.db import models
 from django.urls import reverse
 
+
+class Size(models.Model):
+    name = models.CharField(max_length=10, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class Category(models.Model):
     name = models.CharField(max_length=20, unique=True) # Уникальность - нельяз добавить 2 уникальные категории товара
     slug = models.SlugField(max_length=20, unique=True) # Слаг для генерации ссылок (пробелы -> тире, нижний регистр)
@@ -34,25 +41,16 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True) # Дата добавления товара
     updated = models.DateTimeField(auto_now=True)
 
-    SIZE_CHOICES = [
-        ('S', 'Small'),
-        ('M', 'Medium'),
-        ('L', 'Large'),
-        ('XL', 'Extra Large'),
-    ]
-    SIZES = [value for value, _ in SIZE_CHOICES]
-    sizes = models.CharField(max_length=50, blank=True, default='')  # Размеры в виде строки: 'S,M,L'
+    sizes = models.ManyToManyField(Size, through='ProductSize', 
+                                   related_name='product_item', blank=True)
+
+    def get_sizes_display(self):
+        """Возвращает человекочитаемый список доступных размеров."""
+        return ', '.join(size.name for size in self.sizes.filter(productsize__available=True))
     
     def get_sizes_list(self):
-        """Возвращает список размеров."""
-        if self.sizes:
-            return [size.strip() for size in self.sizes.split(',')]
-        return []
-    
-    def get_sizes_display(self):
-        """Возвращает человекочитаемый список размеров."""
-        sizes = self.get_sizes_list()
-        return ', '.join(dict(self.SIZE_CHOICES).get(size, size) for size in sizes)
+        """Возвращает список доступных размеров."""
+        return list(self.sizes.filter(productsize__available=True).values_list('name', flat=True))
     
     class Meta:
         ordering = ['name']
@@ -69,4 +67,10 @@ class Product(models.Model):
         return reverse('main:product_detail',
                        args=[self.slug])
     
-    
+class ProductSize(models.Model):
+    product_item = models.ForeignKey(Product, on_delete=models.CASCADE)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE)
+    available = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ('product_item', 'size')

@@ -63,6 +63,24 @@ h5 {
     width: auto; /* Сохраняет пропорции */
 }
 
+.header-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Отступ между элементами */
+    padding-right: 20px;
+}
+
+/* Стили для иконки корзины */
+.corzina {
+    width: 30px; /* Размер иконки */
+    height: 30px;
+    transition: transform 0.2s ease; /* Плавное масштабирование при наведении */
+}
+
+.corzina:hover {
+    transform: scale(1.1); /* Лёгкое увеличение при наведении */
+}
+
 
 /* */
 .header {
@@ -134,7 +152,24 @@ h5 {
 
 .detail-description h2 span {
     font-size: 56px;
-    
+}
+
+.size-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    color: #333;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: default; /* Изменено на default, так как кнопки не интерактивны */
+    transition: background-color 0.3s;
+}
+
+.size-btn:hover {
+    background-color: #e9ecef;
 }
 
 /*Каталог товаров с категориями*/
@@ -184,4 +219,108 @@ h5 {
 .selected {
     border: 1px solid #000;
     border-radius: 5px;
+}
+
+/* Корзина */
+.cart-card {
+    display: flex;
+    gap: 15px;
+    justify-self: center;
+    align-items: center;
+    width: 570px;
+    height: 150px;
+    border: 1px solid #00000042;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-repeat: no-repeat;
+}
+
+.cart-card-img img {
+    width: 125px;
+    height: 125px;
+    border: 1px solid #00000086;
+}
+
+.cart {
+    flex-direction: column;
+}
+
+.cart-title {
+    margin-top: 60px;
+    margin-bottom: 30px;   
+}
+
+.cart-cards {
+    max-height: 52vh;
+    width: 600px;
+    overflow-y: auto;
+}
+
+.cart-card-img img {
+    width: 125px;
+    height: 125px;
+    border: 1px solid #00000042;
+}
+
+.cart-card-name {
+    width: 180px;
+}
+
+.remove-btn {
+    background-color: #fff;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 30px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.5s ease;
+}
+
+.remove-btn:hover {
+    border: 1px solid #999;
+}
+
+.cart-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 50px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.5s ease;
+}
+
+.cart-btn:hover {
+    border: 1px solid #999;
+}
+
+.cart-price {
+    font-size: 16px;
+}
+
+.opac {
+    opacity: 0.5;
+    margin: 0;
+}
+
+.total {
+    margin: 25px 0 25px 0;
+}
+
+.add-to-cart-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 50px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    margin: 10px 0 10px 0;
+    background-color: #fff;
 }

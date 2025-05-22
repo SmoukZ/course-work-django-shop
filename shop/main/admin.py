@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import Product, Category
+from .models import Product, Category, Size, ProductSize
+
+class ProductSizeInline (admin.TabularInline):
+    model = ProductSize
+    extra = 4 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -9,10 +13,14 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug', 'price', 
-                    'available', 'created', 'updated', 'get_sizes_display']
+                    'available', 'created', 'updated']
     list_filter = ['available', 'created', 'updated']
     list_editable = ['price', 'available'] # Параметры, которые можно изменить в любой момент
     prepopulated_fields = {'slug': ('name',)}
-    help_texts = {
-        'sizes': 'Введите размеры через запятую (например, S,M,L). Доступные размеры: S, M, L, XL.'
-    }
+    inlines = [ProductSizeInline]
+
+@admin.register(Size)
+class SizeAdmin(admin.ModelAdmin):
+    list_display = ('name', )
+    search_fields = ('name', )
+

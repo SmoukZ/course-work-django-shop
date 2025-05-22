@@ -29,6 +29,8 @@
                             <a href="{{ product.get_absolute_url }}" class="home-card d-flex flex-column align-items-center text-center">
                                 <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/nike-shoes.jpeg" %}{% endif %}" class="card-img" alt="">
                                 <h5 class="title-card">{{ product.name }}</h5>
+                                <p class="price"> {{ product.price }} р</p>
+                                
                             </a>
                         </div>
                     {% endfor %}

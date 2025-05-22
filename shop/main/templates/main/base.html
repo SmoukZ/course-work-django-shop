@@ -28,8 +28,18 @@
             <div class="header-logo">
                 <a href="/"><img src="{% static "img/logo.png" %}" alt="" class="yumms-logo"></a>
             </div>
-            <div class="header-profile">
-                <a href="#" class="m-3">LOGIN</a>
+            <div class="header-profile pt-2">
+                <a href="{% url 'cart:cart_detail' %}"><img src="{% static 'img/corzina.png' %}" class="corzina" alt=""></a>
+                <a href="#" class="m-2">LOGIN</a>
+                <p class="cart-quantity">
+                    {% with card_quantity=cart|length %}
+                        {% if card_quantity > 0 %}
+                             {{ cart_quantity }}
+                        {% else %}
+                            0
+                        {% endif %}
+                     {% endwith %}
+                </p>
             </div>
         </div>
     </header>

@@ -15,13 +15,27 @@
             <h2>{{ product.name }}</h2>
             <h3>Category: {{ product.category }}</h3>
             <p>Description: {{ product.description|linebreaks }}</p>
+            <p><strong>Цена:</strong> {{ product.price }} руб.</p>
 
-            {% if product.sizes %}
-                <p>Available Sizes: {{ product.get_sizes_display }}</p>
-            {% else %}
-                <p>Available Sizes: Not specified</p>
-            {% endif %}
-            <a href="#" class="cart-btn d-flex align-items-center justify-content-center">Add to</a>
+            <div class="sizes">
+                <p>Available sizes:</p>
+                <ul class="sizes-list d-flex gap-3">
+                    {% for size in product.get_sizes_list %}
+                        <li>
+                            <span class="size-btn">{{ size }}</span>
+                        </li>
+                    {% empty %}
+                        <li><p>Размеры недоступны</p></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <form action="{% url "cart:cart_add" product.id %}" class="qform" method="post">
+                <div class="cart-form">
+                    {{ cart_product_form }}
+                    {% csrf_token %}
+                </div>
+                <input type="submit" class="add-to-cart-btn" value="Add to cart">
+            </form>
         </div>
     </div>
 {% endblock content %}
