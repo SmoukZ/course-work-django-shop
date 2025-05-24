@@ -136,3 +136,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 CART_SESSION_ID = 'cart'
 
 AUTH_USER_MODEL = 'users.User'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_HOST_USER = 'podkovskiy13337@mail.ru'  # Ваш email на Mail.ru
+EMAIL_HOST_PASSWORD = 'q3w9kcr8TLuL1ZPsPysC'  # Пароль или пароль приложения
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

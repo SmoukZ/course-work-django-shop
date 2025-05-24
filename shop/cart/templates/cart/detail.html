@@ -42,7 +42,7 @@
                 <p class="cart-quantity">
                 {% with cart_quantity=cart|length %}
                     {% if cart_quantity > 0 %}
-                        <a href="#" class="cart-btn">Оформление заказа Checkout</a>
+                        <a href="{% url 'orders:order_create' %}" class="cart-btn">Оформление заказа Checkout</a>
                     {% endif %}
                 {% endwith %}
                 </p>
