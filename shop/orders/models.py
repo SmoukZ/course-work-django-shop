@@ -11,13 +11,16 @@ class Order(models.Model):
     city = models.CharField(max_length=25)
     address = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=20) # Почтовый индекс
+    phone_number = models.CharField(max_length=20)  # Номер телефона
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    is_processed = models.BooleanField(default=False, verbose_name="Обработан")  # Новое поле
 
     class Meta:
         ordering = ['-created']
         indexes = [
             models.Index(fields=['-created']),
+            models.Index(fields=['is_processed']),  # Индекс для фильтрации
         ]
 
     def __str__(self):
@@ -36,9 +39,10 @@ class OrderItem(models.Model):
     price = models.DecimalField(max_digits=10,
                                 decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
+    size = models.CharField(max_length=10, blank=True, null=True)
 
     def __str__(self):
-        return str(self.id)
+        return f"{self.product.name} (Size: {self.size or 'N/A'})"
     
     def get_cost(self):
         return self.price * self.quantity

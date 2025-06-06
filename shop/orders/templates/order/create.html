@@ -20,12 +20,18 @@
                     name="last_name" placeholder="Your Last Name" value="{{ form.last_name.value|default:'' }}" required>
                 </div>
                 <div class="col-md-12 mb-3">
+                    <label for="id_phone_number" class="form-label">Phone Number</label>
+                    <input type="text" class="form-contorl form-styleprofile" id="id_phone_number"
+                    name="phone_number" placeholder="Your Phone Number" value="{{ form.phone_number.value|default:'' }}" required>
+                    {% if form.phone_number.errors %}
+                        <p class="text-danger">{{ form.phone_number.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="col-md-12 mb-3">
                     <label for="id_email" class="form-label">Email</label>
                     <input type="text" class="form-contorl form-styleprofile" id="id_email"
                     name="email" placeholder="Your Email" value="{{ form.email.value|default:'' }}" required>
                 </div>
-
-                
                 <div class="col-md-12 mb-3">
                     <label for="id_address" class="form-label">Address</label>
                     <input type="text" class="form-contorl form-styleprofile" id="id_address"
@@ -44,20 +50,18 @@
                 <p><input type="submit" value="Place Order"></p>
                 {% csrf_token %}
             </form>
-
         </div>
         <div class="checkout">
             <h1>Checkout</h1>
             <div class="order-info">
                 {% for item in cart %}
                     <li>
-                        {{ item.quantity }} * {{ item.product.name }}
-                        <p>{{ item.total_price }}</p>
+                        {{ item.quantity }} x {{ item.product.name }} (Размер: {{ item.size|default:"Не указан" }})
+                        <p>{{ item.total_price }} руб.</p>
                     </li>
-                    <p>Total: {{ cart.get_total_price }}</p>
                 {% endfor %}
+                <p><strong>Total:</strong> {{ cart.get_total_price|floatformat:2 }} руб.</p>
             </div>
         </div>
     </div>
 {% endblock content %}
-

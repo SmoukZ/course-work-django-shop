@@ -9,7 +9,6 @@
     <div class="detail-product d-flex">
         <div class="detail-img">
             <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/nike-shoes.jpeg" %}{% endif %}" alt="" class="detail-image">
-            
         </div>
         <div class="detail-description">
             <h2>{{ product.name }}</h2>
@@ -17,21 +16,21 @@
             <p>Description: {{ product.description|linebreaks }}</p>
             <p><strong>Цена:</strong> {{ product.price }} руб.</p>
 
-            <div class="sizes">
-                <p>Available sizes:</p>
-                <ul class="sizes-list d-flex gap-3">
-                    {% for size in product.get_sizes_list %}
-                        <li>
-                            <span class="size-btn">{{ size }}</span>
-                        </li>
-                    {% empty %}
-                        <li><p>Размеры недоступны</p></li>
-                    {% endfor %}
-                </ul>
-            </div>
             <form action="{% url "cart:cart_add" product.id %}" class="qform" method="post">
                 <div class="cart-form">
-                    {{ cart_product_form }}
+                    <div class="quantity">
+                        <label for="{{ cart_product_form.quantity.id_for_label }}">Количество:</label>
+                        {{ cart_product_form.quantity }}
+                    </div>
+                    <div class="sizes">
+                        <p>Available sizes:</p>
+                        {% if product.get_sizes_list %}
+                            <label for="{{ cart_product_form.size.id_for_label }}">Размер:</label>
+                            {{ cart_product_form.size }}
+                        {% else %}
+                            <p>Размеры недоступны</p>
+                        {% endif %}
+                    </div>
                     {% csrf_token %}
                 </div>
                 <input type="submit" class="add-to-cart-btn" value="Add to cart">
