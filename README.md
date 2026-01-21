@@ -53,7 +53,7 @@ Chrome, Safari, Opera, Firefox.
 
 ## Use Case (Диаграмма вариантов использования) 
 
-<img src="/Users/smoukz_/Desktop/Projects/diagrams/use case.png" width="600">
+![Alt текст](diagrams/use%20case.png)
 
 ---
 
@@ -61,7 +61,7 @@ Chrome, Safari, Opera, Firefox.
 
 ### ERD
 
-<img src="/Users/smoukz_/Desktop/Projects/diagrams/use case.png" width="600">
+![Alt текст](diagrams/Схема%20базы%20данных.png)
 
 ## 🚀 Установка
 
